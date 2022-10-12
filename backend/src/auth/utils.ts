@@ -1,6 +1,9 @@
 import { decode } from 'jsonwebtoken'
 
 import { JwtPayload } from './JwtPayload'
+import { createLogger } from '../utils/logger'
+
+const logger = createLogger('createTodo');
 
 /**
  * Parse a JWT token and return a user id
@@ -8,12 +11,14 @@ import { JwtPayload } from './JwtPayload'
  * @returns a user id from the JWT token
  */
 export function parseUserId(jwtToken: string): string {
+  logger.info("parsing user id")
   const decodedJwt = decode(jwtToken) as JwtPayload
   return decodedJwt.sub
 }
 
 export function getToken(authHeader: string): string {
 
+    logger.info("getting token")
     if (!authHeader) {
       throw new Error('No authentication header');
     }
